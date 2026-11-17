@@ -7,8 +7,8 @@ namespace App\Repositories;
 class TentativaLoginRepository extends AbstractRepository
 {
     protected string $table = 'tentativas_login';
-    protected string $entityClass = \App\Core\Model::class; // Não usamos entidade para essa tabela
-    protected array $fillable = ['email', 'ip', 'sucesso'];
+    protected string $entityClass = \App\Core\Model::class;
+    protected array $fillable = ['email', 'ip']; 
 
     public function contarPorIp(string $marcador, string $ip, int $minutos): int
     {
@@ -27,8 +27,8 @@ class TentativaLoginRepository extends AbstractRepository
     {
         $this->create([
             'email' => $marcador,
-            'ip' => $ip,
-            'sucesso' => 0
+            'ip' => $ip
+           
         ]);
     }
 }

@@ -70,7 +70,10 @@ class ChamadoController
     $repo = new ChamadoRepository();
     $chamado = $repo->find($chamadoId);
 
-    if ($chamado === null) { http_response_code(404); return "Chamado não encontrado."; }
+    if ($chamado === null) { 
+    http_response_code(404); 
+    return \App\Core\View::render('errors.404', [], 'layouts.main'); 
+}
 
     $usuario = Auth::user();
     if ($chamado->solicitante_id !== $usuario->id && $usuario->perfil === 'solicitante') {

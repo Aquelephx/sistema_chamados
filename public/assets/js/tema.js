@@ -1,5 +1,8 @@
+// 1. Configuração da URL Base (antes estava inline no HTML)
+window.APP_BASE_URL = document.currentScript.getAttribute('data-base-url') || '';
+
+// 2. Aplica o tema ANTES da tela pintar (evita piscar branco no modo escuro)
 (function() {
-    // 1. APLICA O TEMA IMEDIATAMENTE (Antes da tela pintar)
     const raiz = document.documentElement;
     const metaCor = document.querySelector('meta[name="theme-color"]');
     
@@ -7,8 +10,6 @@
         try {
             const temaSalvo = localStorage.getItem('tema');
             const prefereEscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            // Se salvou 'dark', ou se não salvou nada e o sistema tá no dark
             const escuro = temaSalvo === 'dark' || (temaSalvo === null && prefereEscuro);
             
             if (escuro) {
@@ -20,38 +21,30 @@
             if (metaCor) {
                 metaCor.setAttribute('content', escuro ? '#14274a' : '#1d4a8f');
             }
-        } catch (e) {
-            console.error('Erro ao ler o tema:', e);
-        }
+        } catch (e) {}
     }
 
-    // Roda na hora!
     aplicarTemaSalvo();
 
-    // 2. CONFIGURA O BOTÃO (Quando o HTML estiver pronto)
+    // 3. Configura o botão de alternar tema
     document.addEventListener('DOMContentLoaded', () => {
         const btnTema = document.getElementById('btn-tema');
         if (!btnTema) return;
 
-        // Atualiza o emoji do botão de acordo com o tema atual
         function atualizarBotao() {
-            btnTema.textContent = raiz.classList.contains('dark-mode') ? '☀️' : '🌙';
+            const escuro = raiz.classList.contains('dark-mode');
+            btnTema.textContent = escuro ? '☀️' : '🌙';
         }
 
         atualizarBotao();
 
-        // Evento de clique
         btnTema.addEventListener('click', () => {
             const ficouEscuro = raiz.classList.toggle('dark-mode');
-            
-            try { 
-                localStorage.setItem('tema', ficouEscuro ? 'dark' : 'light'); 
-            } catch (e) {}
+            try { localStorage.setItem('tema', ficouEscuro ? 'dark' : 'light'); } catch (e) {}
             
             if (metaCor) {
                 metaCor.setAttribute('content', ficouEscuro ? '#14274a' : '#1d4a8f');
             }
-            
             atualizarBotao();
         });
     });
