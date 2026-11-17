@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: #0a1628;
+    background-image:
+        radial-gradient(circle at 15% 0%, rgba(29, 74, 143, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 45%);
+    color: #e2e8f0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== HEADER ===== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+.header-titulo h1 {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    color: #f8fafc;
+    margin-bottom: 4px;
+}
+.header-titulo .subtitulo {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+.header-data { text-align: right; }
+.header-data .relogio {
+    font-size: 26px;
+    font-weight: 800;
+    color: #f8fafc;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+}
+.header-data .data {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* ===== CARDS DO TOPO ===== */
+.cards-topo {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.card {
+    padding: 16px 12px;
+    border-radius: 12px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+}
+.card:hover { transform: translateY(-2px); }
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.35);
+}
+.card .valor {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 6px;
+}
+.card .titulo {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.85);
+}
+
+.c-laranja { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); }
+.c-azul    { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+.c-verde   { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+.c-teal    { background: linear-gradient(135deg, #0d9488 0%, #115e59 100%); }
+.c-roxo    { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); }
+.c-vermelho{ background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); }
+
+/* ===== BLOCOS (Tabelas + Gráficos) ===== */
+.grid-linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+.bloco {
+    background: rgba(30, 41, 59, 0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.bloco h3 {
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.bloco h3::before {
+    content: '';
+    width: 3px;
+    height: 12px;
+    background: #3b82f6;
+    border-radius: 2px;
+}
+
+/* ===== TABELAS ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+th {
+    color: #64748b;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+td {
+    padding: 9px 10px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    color: #cbd5e1;
+    font-weight: 500;
+}
+td:first-child { color: #f1f5f9; font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+tr:hover td { background: rgba(59, 130, 246, 0.06); }
+.center { text-align: center; }
+
+/* ===== GRÁFICOS ===== */
+.chart-container {
+    position: relative;
+    height: 200px;
+    width: 100%;
+}
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chart-pizza {
+    position: relative;
+    height: 180px;
+    width: 180px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #475569;
+    padding-top: 14px;
+    border-top: 1px solid rgba(148, 163, 184, 0.08);
+    font-weight: 500;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 1100px) {
+    .cards-topo { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 768px) {
+    body { padding: 12px; }
+    .cards-topo { grid-template-columns: repeat(2, 1fr); }
+    .grid-linha { grid-template-columns: 1fr; }
+    .card .valor { font-size: 24px; }
+    .chart-container { height: 180px; }
+}
+
+/* ===== REFORÇO VISUAL: RELÓGIO E DATA ===== */
+.header-data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.header-data .relogio {
+    font-family: 'Inter', monospace !important;
+    font-size: 32px !important;
+    font-weight: 800 !important;
+    color: #f8fafc !important;
+    line-height: 1 !important;
+    letter-spacing: 1px !important;
+    font-variant-numeric: tabular-nums !important;
+}
+
+.header-data .data {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    line-height: 1 !important;
+}
+
+/* ===== CORREÇÕES DE LAYOUT (RODAPÉ E CELULAR) ===== */
+.menu-rodape {
+    display: flex;
+    gap: 20px;
+}
+.menu-rodape .ativo {
+    color: #3b82f6;
+    font-weight: 700;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 2px;
+}
+
+@media (max-width: 768px) {
+    footer { flex-direction: column; gap: 10px; align-items: center; text-align: center; }
+    .bloco { padding: 12px; }
+    .bloco h3 { font-size: 10px; }
+    td, th { padding: 6px 4px; font-size: 11px; }
+    
+    /* Dá um espaço para o botão do som não cobrir a tabela */
+    body { padding-bottom: 80px; }
+}
+
+/* Cores que faltaram para os cards de Total e SLA */
+.c-azul-escuro {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); /* Azul Ciano forte */
+}
+.c-verde-claro {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%); /* Verde Esmeralda */
+}
+
+/* Ajuste de Grid Responsivo para os Cards */
+@media (max-width: 1100px) {
+    .cards-topo { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 768px) {
+    .cards-topo { 
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas no celular */
+        gap: 8px;
+    }
+    .card { padding: 12px 10px; }
+    .card .valor { font-size: 22px; }
+    .card .titulo { font-size: 8px; }
+}
+
+/* ===== RELÓGIO ESTILIZADO ===== */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap');
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.relogio {
+    font-family: 'JetBrains Mono', monospace; /* Fonte monoespaçada */
+    font-size: 22px;
+    font-weight: 700;
+    color: #e2e8f0;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(59, 130, 246, 0.1);
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de brilho passando */
+.relogio::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    animation: brilho 4s infinite;
+}
+
+@keyframes brilho {
+    100% { left: 200%; }
+}
+
+/* ===== BOTÃO VOLTAR NO PAINEL ===== */
+.header-esquerda {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-voltar-painel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-voltar-painel:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.btn-voltar-painel svg {
+    width: 14px;
+    height: 14px;
+}

@@ -1,0 +1,20 @@
+{
+    "name": "sistema/chamados",
+    "description": "Sistema profissional de gerenciamento de chamados",
+    "type": "project",
+    "require": {
+        "php": ">=8.2",
+        "ext-pdo": "*",
+        "shuchkin/simplexlsxgen": "^1.5",
+        "vlucas/phpdotenv": "^5.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    }
+}

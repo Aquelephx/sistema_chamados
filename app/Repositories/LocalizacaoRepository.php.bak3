@@ -1,0 +1,71 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Repositories;
+
+use App\Models\Localizacao;
+
+class LocalizacaoRepository extends AbstractRepository
+{
+    protected string $table = 'localizacoes';
+    protected string $entityClass = Localizacao::class;
+
+    protected array $fillable = [
+        'nome',
+        'secretaria_id',
+        'ativo'
+    ];
+
+    /**
+     * Puxa todos os locais com o nome da secretaria via JOIN
+     */
+    public function getAllWithSecretarias(): array
+    {
+        $sql = "SELECT l.*, s.nome AS secretaria_nome 
+                FROM {$this->table} l
+                LEFT JOIN secretarias s ON l.secretaria_id = s.id
+                ORDER BY s.nome ASC, l.nome ASC";
+                
+        $stmt = $this->db->query($sql);
+        $rows = $stmt->fetchAll();
+
+        $localizacoes = [];
+        foreach ($rows as $row) {
+            $localizacoes[] = (new Localizacao())->fromArray($row);
+        }
+
+        return $localizacoes;
+    }
+
+    public function findAtivas(): array
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE ativo = 1 ORDER BY nome ASC";
+        $stmt = $this->db->query($sql);
+        $rows = $stmt->fetchAll();
+
+        $localizacoes = [];
+        foreach ($rows as $row) {
+            $localizacoes[] = (new Localizacao())->fromArray($row);
+        }
+
+        return $localizacoes;
+    }
+
+    public function findByNome(string $nome, ?int $secretariaId = null): ?Localizacao
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE nome = :nome";
+        $params = ['nome' => $nome];
+        
+        if ($secretariaId !== null) {
+            $sql .= " AND secretaria_id = :secretaria_id";
+            $params['secretaria_id'] = $secretariaId;
+        }
+        
+        $sql .= " LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch();
+        return $row ? (new Localizacao())->fromArray($row) : null;
+    }
+}

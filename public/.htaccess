@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# Plano B: Se o mod_rewrite estiver desligado, o FallbackResource assume
+FallbackResource /index.php

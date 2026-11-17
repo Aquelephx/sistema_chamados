@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Core\Result;
+use App\Repositories\ChamadoRepository;
+
+class ChamadoService
+{
+    private ChamadoRepository $chamados;
+
+    public function __construct()
+    {
+        $this->chamados = new ChamadoRepository();
+    }
+
+    public function abrir(string $titulo, string $descricao, int $solicitanteId, ?int $localizacaoId = null, ?int $secretariaId = null): Result
+    {
+        $titulo = trim($titulo);
+        $descricao = trim($descricao);
+
+        if (empty($titulo) || empty($descricao)) {
+            return Result::error('O título e a descrição são obrigatórios.');
+        }
+
+        // NOVA REGRA DE NEGÓCIO: Local obrigatório
+        if (empty($localizacaoId)) {
+            return Result::error('Você precisa selecionar o local do problema.');
+        }
+
+        if ($secretariaId !== null) {
+            $local = (new \App\Repositories\LocalizacaoRepository())->find($localizacaoId);
+            if ($local === null || $local->secretaria_id !== $secretariaId) {
+                return Result::error('Esse local não pertence à sua secretaria.');
+            }
+        }
+
+        $id = $this->chamados->create([
+            'titulo' => $titulo,
+            'descricao' => $descricao,
+            'solicitante_id' => $solicitanteId,
+            'localizacao_id' => $localizacaoId,
+            'secretaria_id' => $secretariaId,
+            'status' => 'aberto',
+            'prioridade' => 'media'
+        ]);
+
+        return Result::ok($id);
+    }
+}

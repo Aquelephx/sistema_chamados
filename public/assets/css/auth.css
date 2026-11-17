@@ -1,0 +1,788 @@
+:root {
+    --azul: #1d4a8f;
+    --azul-escuro: #0a2a5c;
+    --azul-claro: #2563eb;
+    --cinza-100: #f8fafc;
+    --cinza-200: #e2e8f0;
+    --cinza-400: #94a3b8;
+    --cinza-500: #64748b;
+    --cinza-800: #0f172a;
+    --vermelho: #dc2626;
+    --verde: #059669;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #eef2f7;
+    color: var(--cinza-800);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========== ESTRUTURA DIVIDIDA ========== */
+.auth-wrapper { display: grid; min-height: 100vh; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .auth-wrapper { grid-template-columns: 1fr 1fr; } }
+
+/* ========== PAINEL ESQUERDO (BRANDING AZUL) ========== */
+.auth-brand {
+    background: linear-gradient(135deg, #1d4a8f 0%, #0a2a5c 55%, #123768 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 60px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.auth-brand::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    animation: dotsMove 30s linear infinite;
+    pointer-events: none;
+}
+@keyframes dotsMove { to { background-position: 24px 24px; } }
+
+.auth-brand::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.45) 0%, transparent 70%);
+    bottom: -150px; right: -150px;
+    pointer-events: none;
+}
+
+.auth-brand-content { position: relative; z-index: 1; }
+.auth-brand h1 {
+    font-size: 2.4rem; font-weight: 800;
+    line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 16px;
+}
+.auth-brand p {
+    font-size: 1.05rem; opacity: 0.85;
+    max-width: 380px; line-height: 1.6;
+    margin-bottom: 48px;
+}
+
+.auth-features { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+.auth-features li { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; }
+.auth-features .icon-check {
+    flex-shrink: 0; width: 28px; height: 28px;
+    border-radius: 50%; background: rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+}
+.auth-features .icon-check svg { width: 16px; height: 16px; }
+.auth-brand-footer { position: relative; z-index: 1; font-size: 0.8rem; opacity: 0.6; }
+
+/* ========== PAINEL DIREITO ========== */
+.auth-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    background-color: #eef2f7;
+    background-image:
+        radial-gradient(circle at 20% 0%, rgba(29,74,143,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(37,99,235,0.06) 0%, transparent 50%),
+        radial-gradient(circle, rgba(29,74,143,0.10) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 22px 22px;
+}
+
+.auth-panel-inner {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 40px 32px;
+    border-radius: 16px;
+    box-shadow:
+        0 1px 2px rgba(15,23,42,0.04),
+        0 20px 40px -12px rgba(29,74,143,0.15);
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-heading { margin-bottom: 28px; }
+.auth-heading h2 {
+    font-size: 1.65rem; font-weight: 800;
+    letter-spacing: -0.02em; margin-bottom: 6px;
+    color: #0f172a;
+}
+.auth-heading p { font-size: 0.9rem; color: var(--cinza-500); }
+
+/* ========== CAMPOS ========== */
+.field { position: relative; margin-bottom: 16px; }
+.field-input-wrap { position: relative; display: flex; align-items: center; }
+.field-icon {
+    position: absolute; left: 14px;
+    width: 20px; height: 20px; color: var(--cinza-400);
+    pointer-events: none; transition: color 0.2s;
+    z-index: 2;
+}
+.field input:focus ~ .field-icon { color: var(--azul); }
+.field input {
+    width: 100%;
+    padding: 22px 44px 8px 44px;
+    font-size: 0.95rem; font-family: inherit;
+    border: 1.5px solid var(--cinza-200);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--cinza-800);
+    outline: none;
+    transition: all 0.2s ease;
+}
+.field input:focus {
+    background: #fff; border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(29, 74, 143, 0.1);
+}
+.field-label {
+    position: absolute; top: 50%; left: 44px;
+    transform: translateY(-50%);
+    font-size: 0.92rem; color: var(--cinza-400);
+    pointer-events: none; transition: all 0.18s ease;
+}
+.field input:focus + .field-label,
+.field input:not(:placeholder-shown) + .field-label {
+    top: 11px; transform: translateY(0);
+    font-size: 0.68rem; font-weight: 600;
+    color: var(--azul); text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.field-toggle {
+    position: absolute; right: 10px; top: 50%;
+    transform: translateY(-50%);
+    background: transparent; border: none; cursor: pointer;
+    color: var(--cinza-400); padding: 8px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s, background 0.2s;
+}
+.field-toggle:hover { color: var(--azul); background: var(--cinza-100); }
+.field-toggle svg { width: 18px; height: 18px; }
+
+.pwd-strength { margin-top: -8px; margin-bottom: 16px; }
+.pwd-strength-bar { height: 4px; background: var(--cinza-200); border-radius: 2px; overflow: hidden; }
+.pwd-strength-fill { height: 100%; width: 0; transition: all 0.3s ease; border-radius: 2px; }
+.pwd-strength-text { font-size: 0.72rem; color: var(--cinza-500); margin-top: 4px; text-align: right; }
+
+/* ========== ALERTAS ========== */
+.alert {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px 14px; border-radius: 10px;
+    font-size: 0.88rem; margin-bottom: 18px;
+    animation: slideDown 0.3s ease;
+}
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.alert svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; }
+.alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+/* ========== BOTÃO ========== */
+.btn-auth {
+    width: 100%; min-height: 50px; padding: 12px 20px;
+    background: linear-gradient(135deg, #1d4a8f 0%, #2563eb 100%);
+    color: #fff; border: none; border-radius: 10px;
+    font-size: 0.98rem; font-weight: 700; font-family: inherit;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    gap: 8px; transition: all 0.2s ease; margin-top: 8px;
+}
+.btn-auth:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(29, 74, 143, 0.3);
+}
+.btn-auth:active:not(:disabled) { transform: translateY(0); }
+.btn-auth:disabled { opacity: 0.85; cursor: not-allowed; }
+
+.spinner {
+    width: 15px; height: 15px;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========== LINKS ========== */
+.auth-links { margin-top: 22px; text-align: center; font-size: 0.88rem; color: var(--cinza-500); }
+.auth-links a { color: var(--azul); font-weight: 600; text-decoration: none; }
+.auth-links a:hover { color: var(--azul-claro); text-decoration: underline; }
+.auth-links .divider { color: var(--cinza-200); margin: 0 10px; }
+
+/* ========== SELECT CUSTOMIZADO (.sel) ========== */
+.sel { position: relative; width: 100%; }
+.sel .sel-nativo { display: none !important; }
+
+.sel-botao {
+    width: 100%;
+    min-height: 56px;
+    padding: 22px 44px 8px 44px; /* Mesmo padding do input */
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid var(--cinza-200);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--cinza-800);
+    outline: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    display: block; /* Trocado de flex para block para o absolute funcionar perfeito */
+    text-align: left;
+}
+
+.sel-botao:focus,
+.sel.aberto .sel-botao {
+    background: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(29, 74, 143, 0.1);
+}
+
+.sel-botao::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cinza-400);
+    border-bottom: 2px solid var(--cinza-400);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s;
+    pointer-events: none;
+}
+
+.sel.aberto .sel-botao::after {
+    transform: translateY(-50%) rotate(-135deg);
+}
+
+.sel-label-static {
+    position: absolute;
+    top: 11px;
+    left: 44px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--azul);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sel-texto {
+    position: absolute;
+    bottom: 8px;
+    left: 44px;
+    font-size: 0.95rem;
+    color: var(--cinza-400);
+    pointer-events: none;
+    z-index: 2;
+    transition: color 0.2s;
+}
+
+.sel-texto.preenchido { color: var(--cinza-800); }
+
+.sel-lista {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: #fff;
+    border: 1px solid var(--cinza-200);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(15, 27, 51, 0.15);
+    z-index: 1050;
+}
+
+.sel.aberto .sel-lista {
+    display: block;
+    animation: fadeUp 0.15s ease-out;
+}
+
+.sel-lista li {
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--cinza-800);
+}
+
+.sel-lista li:hover { background: #f0f4f8; }
+
+.sel-lista li[aria-selected="true"] {
+    background: #e1ecf8;
+    color: var(--azul);
+    font-weight: 600;
+    border-left: 4px solid var(--azul);
+}
+
+/* ========== MOBILE ========== */
+@media (max-width: 899px) {
+    .auth-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+    .auth-brand { flex: 0 0 auto; padding: 24px 20px; text-align: center; justify-content: center; align-items: center; }
+    .auth-brand h1 { font-size: 1.25rem; margin-bottom: 4px; line-height: 1.2; }
+    .auth-brand p { font-size: 0.78rem; margin-bottom: 0; max-width: 100%; opacity: 0.8; }
+    .auth-features, .auth-brand-footer, .auth-brand::after { display: none; }
+    .auth-panel { flex: 1 1 auto; padding: 24px 16px; align-items: flex-start; }
+    .auth-panel-inner { padding: 28px 22px; border-radius: 14px; max-width: 100%; }
+    .auth-heading { margin-bottom: 22px; }
+    .auth-heading h2 { font-size: 1.35rem; }
+    .auth-heading p { font-size: 0.85rem; }
+}
+
+/* Impede SVGs de quebrarem a tela */
+.auth-wrapper svg { max-width: 100%; max-height: 100%; }
+
+/* ==========================================
+   ADAPTAÇÃO DO CSS PARA O SELECTS.JS NATIVO
+   ========================================== */
+
+/* Label do lado de fora do select (já que o selects.js não suporta label flutuante) */
+.field-label-externo {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cinza-500);
+    margin-bottom: 6px;
+    margin-left: 4px;
+}
+
+/* Ajusta o botão gerado pelo selects.js */
+.sel .sel-botao {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 44px 14px 44px !important; /* Centralizado verticalmente, com espaço para o ícone */
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid var(--cinza-200);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--cinza-800);
+    display: flex;
+    align-items: center;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 400;
+}
+
+/* Garante que a setinha fique certa */
+.sel .sel-botao::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cinza-400);
+    border-bottom: 2px solid var(--cinza-400);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s;
+    pointer-events: none;
+}
+
+.sel.aberto .sel-botao::after {
+    transform: translateY(-50%) rotate(-135deg);
+}
+
+.sel .sel-botao:focus,
+.sel.aberto .sel-botao {
+    background: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(29, 74, 143, 0.1);
+}
+
+/* Garante que o ícone do prédio/local apareça */
+.field .field-icon {
+    z-index: 5 !important;
+}
+
+/* Esconde o select real */
+.sel select.sel-nativo {
+    display: none !important;
+}
+
+/* Ajuste do Select gerado pelo selects.js */
+.field-label-externo {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cinza-500);
+    margin-bottom: 6px;
+    margin-left: 4px;
+}
+
+.sel {
+    width: 100%;
+    position: relative;
+}
+
+.sel .sel-botao {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 44px 14px 44px !important;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid var(--cinza-200);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--cinza-800);
+    display: flex;
+    align-items: center;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.sel .sel-botao::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cinza-400);
+    border-bottom: 2px solid var(--cinza-400);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s;
+    pointer-events: none;
+}
+
+.sel.aberto .sel-botao::after {
+    transform: translateY(-50%) rotate(-135deg);
+}
+
+.sel .sel-botao:focus,
+.sel.aberto .sel-botao {
+    background: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(29, 74, 143, 0.1);
+}
+
+/* Garante que o ícone do prédio/local apareça por cima */
+.field .field-icon {
+    z-index: 5 !important;
+}
+
+/* Esconde o select nativo quando o selects.js o transformar */
+.sel select.sel-nativo {
+    display: none !important;
+}
+
+/* ==========================================
+   ADAPTAÇÃO DEFINITIVA PARA O SELECTS.JS
+   ========================================== */
+.field-label-externo {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cinza-500);
+    margin-bottom: 6px;
+    margin-left: 4px;
+}
+
+.sel {
+    width: 100%;
+    position: relative;
+}
+
+.sel .sel-botao {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 44px 14px 44px !important;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid var(--cinza-200);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--cinza-800);
+    display: flex;
+    align-items: center;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.sel .sel-botao::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cinza-400);
+    border-bottom: 2px solid var(--cinza-400);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s;
+    pointer-events: none;
+}
+
+.sel.aberto .sel-botao::after {
+    transform: translateY(-50%) rotate(-135deg);
+}
+
+.sel .sel-botao:focus,
+.sel.aberto .sel-botao {
+    background: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(29, 74, 143, 0.1);
+}
+
+.field .field-icon {
+    z-index: 5 !important;
+}
+
+/* ==========================================
+   AJUSTE DO COMPONENTE SELECTS.JS
+   ========================================== */
+.field-label-externo {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cinza-500);
+    margin-bottom: 6px;
+    margin-left: 4px;
+}
+
+.sel {
+    width: 100%;
+    position: relative;
+}
+
+.sel .sel-botao {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 44px 14px 44px !important;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid var(--cinza-200);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--cinza-800);
+    display: flex;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sel .sel-botao::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cinza-400);
+    border-bottom: 2px solid var(--cinza-400);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s;
+}
+
+.sel.aberto .sel-botao::after {
+    transform: translateY(-50%) rotate(-135deg);
+}
+
+.sel .sel-botao:focus, .sel.aberto .sel-botao {
+    background: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(29, 74, 143, 0.1);
+}
+
+.field .field-icon {
+    z-index: 5 !important;
+}
+
+.sel select.sel-nativo {
+    display: none !important;
+}
+
+/* ==========================================
+   ESTILO DO SELECTS.JS (CASANDO COM OS INPUTS)
+   ========================================== */
+.sel {
+    width: 100%;
+    position: relative;
+}
+
+.sel .sel-botao {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 44px 14px 44px !important;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid var(--cinza-200);
+    border-radius: 10px;
+    background: #f8fafc;
+    color: var(--cinza-800);
+    display: flex;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sel .sel-botao::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--cinza-400);
+    border-bottom: 2px solid var(--cinza-400);
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s;
+}
+
+.sel.aberto .sel-botao::after {
+    transform: translateY(-50%) rotate(-135deg);
+}
+
+.sel .sel-botao:focus, 
+.sel.aberto .sel-botao {
+    background: #fff;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(29, 74, 143, 0.1);
+}
+
+.field .field-icon {
+    z-index: 5 !important;
+}
+
+.sel select.sel-nativo {
+    display: none !important;
+}
+
+
+/* =========================================
+   BOTÃO DE TEMA (telas de login/cadastro)
+   ========================================= */
+.btn-tema-auth {
+    position: fixed; top: 14px; right: 14px; z-index: 50;
+    width: 42px; height: 42px; padding: 0; border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, .45);
+    background: rgba(255, 255, 255, .9); color: #0f172a;
+    font-size: 1.15rem; line-height: 1; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, .15);
+    transition: transform .2s;
+}
+.btn-tema-auth:hover { transform: scale(1.08); }
+
+/* =========================================
+   MODO ESCURO (login, cadastro, esqueci a senha)
+   A classe dark-mode é colocada no <html> pelo script do <head>.
+   O painel azul da esquerda já é escuro, então fica como está.
+   ========================================= */
+html.dark-mode { color-scheme: dark; }
+
+html.dark-mode body { background: #0b1220; color: #e2e8f0; }
+
+html.dark-mode .btn-tema-auth {
+    background: rgba(30, 41, 59, .95); color: #f8fafc;
+    border-color: #334155;
+}
+
+html.dark-mode .auth-panel {
+    background-color: #0b1220;
+    background-image:
+        radial-gradient(circle at 20% 0%, rgba(37, 99, 235, .12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(37, 99, 235, .08) 0%, transparent 50%),
+        radial-gradient(circle, rgba(148, 163, 184, .10) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 22px 22px;
+}
+html.dark-mode .auth-panel-inner {
+    background: #1e293b;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 20px 40px -12px rgba(0, 0, 0, .6);
+}
+html.dark-mode .auth-heading h2 { color: #f8fafc; }
+html.dark-mode .auth-heading p,
+html.dark-mode .auth-links,
+html.dark-mode .field-label-externo,
+html.dark-mode .pwd-strength-text { color: #94a3b8; }
+html.dark-mode .auth-links a { color: #60a5fa; }
+html.dark-mode .auth-links a:hover { color: #93c5fd; }
+html.dark-mode .auth-links .divider { color: #475569; }
+
+/* campos */
+html.dark-mode .field input,
+html.dark-mode .sel .sel-botao,
+html.dark-mode .sel-botao {
+    background: #0f172a; color: #e2e8f0; border-color: #334155;
+}
+html.dark-mode .field input:focus,
+html.dark-mode .sel .sel-botao:focus,
+html.dark-mode .sel.aberto .sel-botao {
+    background: #0f172a; border-color: #60a5fa;
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, .18);
+}
+html.dark-mode .field-icon,
+html.dark-mode .field-label,
+html.dark-mode .sel-texto,
+html.dark-mode .field-toggle { color: #64748b; }
+html.dark-mode .field input:focus ~ .field-icon,
+html.dark-mode .field input:focus + .field-label,
+html.dark-mode .field input:not(:placeholder-shown) + .field-label,
+html.dark-mode .sel-label-static,
+html.dark-mode .field-toggle:hover { color: #60a5fa; }
+html.dark-mode .field-toggle:hover { background: #334155; }
+html.dark-mode .sel-texto.preenchido { color: #e2e8f0; }
+html.dark-mode .pwd-strength-bar { background: #334155; }
+html.dark-mode .sel-botao::after,
+html.dark-mode .sel .sel-botao::after { border-color: #64748b; }
+html.dark-mode input:-webkit-autofill,
+html.dark-mode input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px #0f172a inset;
+    -webkit-text-fill-color: #e2e8f0;
+    caret-color: #e2e8f0;
+}
+
+/* lista do select customizado */
+html.dark-mode .sel-lista {
+    background: #1e293b; border-color: #334155;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .55);
+}
+html.dark-mode .sel-lista li { color: #e2e8f0; }
+html.dark-mode .sel-lista li:hover { background: #2a3b55; }
+html.dark-mode .sel-lista li[aria-selected="true"] {
+    background: rgba(59, 130, 246, .18); color: #93c5fd; border-left-color: #60a5fa;
+}
+
+/* alertas */
+html.dark-mode .alert-error   { background: rgba(239, 68, 68, .14); color: #fca5a5; border-color: rgba(239, 68, 68, .4); }
+html.dark-mode .alert-success { background: rgba(34, 197, 94, .12); color: #86efac; border-color: rgba(34, 197, 94, .35); }
+
+/* =========================================
+   "Manter conectado" (tela de login)
+   ========================================= */
+.lembrar {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin: 4px 0 6px; cursor: pointer; user-select: none;
+    font-size: 0.9rem; color: var(--cinza-800); line-height: 1.35;
+}
+.lembrar input {
+    flex-shrink: 0; width: 18px; height: 18px; margin: 2px 0 0; padding: 0;
+    accent-color: var(--azul); cursor: pointer;
+}
+.lembrar small { display: block; margin-top: 2px; font-size: 0.75rem; color: var(--cinza-500); }
+
+html.dark-mode .lembrar { color: #e2e8f0; }
+html.dark-mode .lembrar small { color: #94a3b8; }
+html.dark-mode .lembrar input { accent-color: #60a5fa; }
